@@ -1,0 +1,54 @@
+{% load i18n  %}
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> 
+        <meta name="apple-mobile-web-app-capable" content="yes"> 
+        <title>IT-JAM GEODJANGO</title>        
+        <link rel="stylesheet" href="http://openlayers.org/dev/theme/default/style.css" type="text/css"> 
+        <link rel="stylesheet" href="{{ MEDIA_URL }}/css/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <script src="http://openlayers.org/dev/OpenLayers.js"></script> 
+        <script src="http://cdn.socket.io/stable/socket.io.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/app.js"></script>
+       {% block extra_js %}{% endblock extra_js %}
+    </head>
+    <body onload="init()">
+<a href="http://github.com/rootart/geojam"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 1000;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a> 
+        <div id="map"></div> 
+ 
+          <div id="text"> 
+              <div class="top">
+                  <img src="/media/images/location.png" alt="" class="checkin" id="locate">
+                  {% if user.is_authenticated %}
+                    <a href="{% url logout %}" class="checkin">exit</a>{% trans "Howdy"  %}, {{ user.get_full_name|default:user.username }}
+                  {% else %}
+                  
+             <a class="checkin" href="{% url auth %}">{% trans "Load from foursquare" %}</a> or{% endif %}
+             <a href="#" class="checkin show-form-box">{% trans "Checkin directly" %}</a> <span class="checkin count">{{ count }}</span></div>
+             <div class="info">
+                {% trans "Man you are from:" %} <em> {{ location.country }}</em>
+                {% trans "Location:"  %}  <em> {{ location.coords }}</em>
+             </div>
+             <div class="form-box">
+                 <form action="{% url checkin %}" method="post" accept-charset="utf-8">
+                    {% csrf_token %}
+                     <textarea placeholder="Enter you message" name="title" required ></textarea>
+                    <input type="submit" value="{% trans "Send message" %}">
+                 </form>
+             </div>
+             <div class="messages">
+                 <div id="log">
+                 </div>
+                  {% for item in checkins %}
+                    <div class="msg selected" data-msg="{{ item.title }}">
+                        <em>{{ item.updated|date:"H:m:s"  }}</em>
+                        {{ item.title  }}
+                        <a href="#" class="twit"><img src="http://cdn1.iconfinder.com/data/icons/social/16/picons03.png" alt=""></a>
+                    </div>
+                  {% endfor %}
+             </div>
+            </div>  
+    </body> 
+</html>

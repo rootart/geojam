@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block extra_js %}
+    <script>
+    var lon = 3415828.8102757;
+    var lat = 5856135.156454;
+    var zoom = 13;
+    var map, layer;
+
+    function init(){
+
+        // Define custome styles for vector layer
+        var styles = new OpenLayers.StyleMap({
+            "default": new OpenLayers.Style({
+                pointRadius: 10,
+                externalGraphic: "/media/images/4sq.png"
+            }),
+        });
+
+        // Load mapbox image collection for openlayers controls
+        OpenLayers.ImgPath = "http://js.mapbox.com/theme/dark/";
+
+        // Initialize new map object
+        map = new OpenLayers.Map( 'map',  {
+               controls:[
+                  new OpenLayers.Control.Navigation(),
+                  new OpenLayers.Control.PanZoomBar()]
+                  });
+        // Initialize basic OSM layer
+        layer = new OpenLayers.Layer.OSM("OSM layer")
+        map.projection = "EPSG:900913";
+        map.displayProjection = new OpenLayers.Projection("EPSG:4326");
+        map.addControl(new OpenLayers.Control.MousePosition());
+        map.addControl(new OpenLayers.Control.LayerSwitcher());
+        map.addLayer(layer);
+
+       // Set map senter
+        map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
+
+        // GeoJSON object
+        var featurecollection = {
+          "type": "FeatureCollection", 
+          "features": [
+            {"geometry": {
+                "type": "GeometryCollection", 
+                "geometries": {{ obj_list|safe }}
+            }, 
+            "type": "Feature", 
+            "properties": {}}
+          ]
+       };
+
+       var geojson_format = new OpenLayers.Format.GeoJSON();
+       var vector_layer = new OpenLayers.Layer.Vector("Checkins", {styleMap: styles,}); 
+       //vector_layer.displayProjection = new OpenLayers.Projection("EPSG:900913");
+       map.addLayer(vector_layer);
+       vector_layer.addFeatures(geojson_format.read(featurecollection));
+
+    }
+    </script>
+{% endblock extra_js %}

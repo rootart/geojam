@@ -1,0 +1,4 @@
+*.pyc
+*.dat
+static/
+.DS_Store

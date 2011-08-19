@@ -1,0 +1,179 @@
+/* IT-JAM geodjango application stylesheet  */
+@w: #fff;
+@f1: #55A4F2; //gradient start color
+@t1: #3477CE; //gradient end
+@f: darken(@f1, 20%);
+@t: darken(@t1, 20%);
+@border: lighten(@f, 50%);
+@radius: .25em;
+
+html, body, #map {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+textarea {
+    width: 495px;
+    height: 40px;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-right: 5px;
+    color: #000;
+    font-size: 14px;
+}
+input {
+    width: 495px;
+    height: 25px;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-right: 5px;
+    
+}
+
+#text {
+    position: absolute;
+    bottom: 1em;
+    left: 4em;
+    width: 512px;
+    top: 10px;
+/*    min-height: 400px;*/
+    z-index: 20000;
+    opacity: 0.2;
+    overflow: hidden;
+    -webkit-box-shadow: 0px 0px 10px  #000000;
+    -moz-box-shadow: 0px 0px 10px #000000;
+    box-shadow: 0px 0px 10px #000000;
+    border-radius: @radius;
+    
+    .count{
+      font-size: 2em;
+      margin-left: 10px;
+    }
+    
+    .info{
+        height: 30px;
+        display: none;
+        position: relative;
+        z-index: 14;
+        background-color: @w;
+        padding: 5px;
+        line-height: 35px;
+        font-size: 1em;
+        
+        em {
+            background-color: @f;
+            padding: 2px 5px;
+            border-radius: @radius;
+            color: @w;
+        }
+    }
+    
+    .form-box{
+        height: 100px;
+        background-color: @w;
+        display: none;
+        position: relative;
+        z-index: 14;
+    }
+}
+
+#text:hover {
+    opacity: 1;
+}
+.top a {
+    color: @w;
+}
+
+.top {
+   background: -moz-linear-gradient(@f, @t);
+   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(@f), to(@t));
+   background: -webkit-linear-gradient(@f, @t);
+   background: -o-linear-gradient(@f, @t);
+   background: linear-gradient(@f, @t);
+   
+   width: 100%;
+   font-size: 18px;
+   font-family: Georgia;
+   color: #C8E2EE;
+   height: 60px;
+   line-height: 60px;
+   border-radius: .25em .25em 0 0;
+   text-align: center;
+   vertical-align: center;
+
+   
+   img {
+     width: 35px;
+     height: 35px;
+     position: absolute;
+     margin-top: 5px;
+     margin-left: 5px;
+   }
+}
+
+.messages {
+    position: absolute;
+    bottom: 0;
+    top: 60px;
+    width:  100%;
+    background: #fff;
+    overflow-y: auto;
+/*    -webkit-box-shadow: 0px 0px 10px 0px #000000;
+    -moz-box-shadow: 0px 0px 10px 0px #000000;
+    box-shadow: 0px 0px 10px 0px #000000;*/
+}
+
+.msg {
+    background: url(/media/images/icon.png) no-repeat 10px 50%;
+    /*background-size: 20px 20px;*/
+    border-bottom: 1px solid @border;
+    min-height: 30px;
+    padding-left: 3em;
+    padding-top: 1em;
+    font-size: 0.8em;
+    
+    &:nth-child(2n+1) {
+      background-color: lighten(@f, 51%);
+    }
+    
+    em {
+        background-color: #EEE;
+        padding: 2px 5px;
+        color: #777;
+        border-radius: @radius;
+        margin-right: 1em;
+    }
+}
+
+.msg:hover .twit {
+    display: block;
+}
+
+.msg.selected {
+    background-color: lighten(@f, 50%);
+}
+
+.not-display {
+    display: none;
+}
+
+.checkin {
+    padding: 6px 6px;
+    text-decoration: none;
+}
+
+.checkin:hover {
+   padding: 5px 5px;
+   border: 1px solid @t;
+   border-radius: 4px 4px 4px 4px;
+   background-color:@f;
+   color: #FFF;
+}
+
+
+.twit {
+    float: right;
+    padding-right: 10px;
+    display: none;
+}
